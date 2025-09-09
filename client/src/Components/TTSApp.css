@@ -1,0 +1,641 @@
+/* TTSApp.css - Themed TTS Application Styles */
+
+
+/* TTS-specific CSS variables */
+.tts-container {
+  --tts-bg-primary: #0a0a0b;
+  --tts-bg-secondary: #1a1a1d;
+  --tts-bg-glass: rgba(26, 26, 29, 0.8);
+  --tts-bg-card: rgba(26, 26, 29, 0.6);
+  --tts-text-primary: #ffffff;
+  --tts-text-secondary: #a8a8a8;
+  --tts-text-muted: #6b6b6b;
+  --tts-accent-gradient: linear-gradient(135deg, #00d4ff, #ff00ff, #ff6b00);
+  --tts-accent-blue: #00d4ff;
+  --tts-accent-purple: #ff00ff;
+  --tts-accent-orange: #ff6b00;
+  --tts-border-color: rgba(255, 255, 255, 0.1);
+  --tts-hover-bg: rgba(255, 255, 255, 0.05);
+  --tts-success-color: #00ff88;
+  --tts-warning-color: #ffb000;
+  --tts-error-color: #ff4757;
+  --tts-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+}
+
+/* Main Container */
+.tts-container {
+  
+  background: var(--tts-bg-primary);
+  color: var(--tts-text-primary);
+  min-height: calc(100vh - 70px);
+  padding: 2rem;
+  margin-top: 70px; /* Account for navbar */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Voice Settings Card */
+.voice-settings {
+  background: var(--tts-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--tts-border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.voice-settings::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tts-accent-gradient);
+  opacity: 0.6;
+}
+
+.voice-settings h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--tts-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.voice-setting-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.voice-setting-row:last-child {
+  margin-bottom: 0;
+}
+
+.voice-setting-row label {
+  color: var(--tts-text-secondary);
+  font-weight: 500;
+  min-width: 80px;
+  font-size: 0.95rem;
+}
+
+/* Voice Select Dropdown */
+.voice-select {
+  background: var(--tts-bg-card);
+  border: 1px solid var(--tts-border-color);
+  border-radius: 10px;
+  color: var(--tts-text-primary);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  /* font-family: inherit; */
+  min-width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.voice-select:focus {
+  outline: none;
+  border-color: var(--tts-accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.voice-select:hover {
+  border-color: var(--tts-accent-blue);
+}
+
+.voice-select option {
+  background: var(--tts-bg-secondary);
+  color: var(--tts-text-primary);
+  padding: 0.5rem;
+}
+
+/* Range Controls */
+.range-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 250px;
+}
+
+.range-label {
+  color: var(--tts-text-secondary);
+  font-weight: 500;
+  min-width: 100px;
+  font-size: 0.95rem;
+}
+
+.range-input {
+  flex: 1;
+  height: 6px;
+  background: var(--tts-bg-secondary);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.range-input::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--tts-accent-gradient);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.5);
+}
+
+.range-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--tts-accent-gradient);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.range-input::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.5);
+}
+
+.range-value {
+  background: var(--tts-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Text Input Section */
+.text-input-section {
+  background: var(--tts-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--tts-border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.text-input-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tts-accent-gradient);
+  opacity: 0.6;
+}
+
+.text-input-section h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--tts-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Text Textarea */
+.text-textarea {
+  width: 100%;
+  min-height: 120px;
+  background: var(--tts-bg-card);
+  border: 1px solid var(--tts-border-color);
+  border-radius: 12px;
+  color: var(--tts-text-primary);
+  padding: 1rem;
+  font-size: 0.95rem;
+  /* font-family: inherit; */
+  line-height: 1.6;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.text-textarea:focus {
+  outline: none;
+  border-color: var(--tts-accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.text-textarea::placeholder {
+  color: var(--tts-text-muted);
+}
+
+/* Character Count */
+.character-count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--tts-text-muted);
+}
+
+.remaining-chars {
+  color: var(--tts-accent-blue);
+  font-weight: 500;
+}
+
+/* Error Message */
+.error-message {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  border-radius: 10px;
+  color: var(--tts-error-color);
+  padding: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: tts-shake 0.5s ease-in-out;
+}
+
+.error-message::before {
+  content: '⚠️';
+  font-size: 1.2rem;
+}
+
+/* Audio Info Card */
+.audio-info {
+  background: var(--tts-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--tts-border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  animation: tts-fadeInUp 0.5s ease-in-out;
+}
+
+.audio-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tts-success-color);
+  opacity: 0.6;
+}
+
+.audio-info h4 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--tts-success-color);
+}
+
+.audio-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--tts-border-color);
+}
+
+.audio-info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.audio-info-label {
+  color: var(--tts-text-secondary);
+  font-weight: 500;
+}
+
+.audio-info-value {
+  color: var(--tts-text-primary);
+  font-weight: 600;
+}
+
+.warning-text {
+  color: var(--tts-warning-color);
+  font-weight: 500;
+}
+
+/* Control Buttons */
+.control-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.btn {
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  /* font-family: inherit; */
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled:hover::before {
+  left: -100%;
+}
+
+.btn-primary {
+  background: var(--tts-accent-gradient);
+  color: white;
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 0, 255, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-success {
+  background: var(--tts-success-color);
+  color: var(--tts-bg-primary);
+}
+
+.btn-success:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-warning {
+  background: var(--tts-warning-color);
+  color: var(--tts-bg-primary);
+}
+
+.btn-warning:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 176, 0, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-info {
+  background: var(--tts-accent-blue);
+  color: var(--tts-bg-primary);
+}
+
+.btn-info:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--tts-error-color);
+  border: 1px solid var(--tts-error-color);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--tts-error-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+}
+
+/* Loading Animation */
+.loading {
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: tts-spin 1s linear infinite;
+}
+
+/* Audio Player Section */
+.audio-player-section {
+  background: var(--tts-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--tts-border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  animation: tts-fadeInUp 0.5s ease-in-out;
+}
+
+.audio-player-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tts-accent-gradient);
+  opacity: 0.6;
+}
+
+.audio-player-section h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--tts-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.audio-player {
+  width: 100%;
+  height: 50px;
+  background: var(--tts-bg-card);
+  border-radius: 10px;
+  outline: none;
+}
+
+.audio-player::-webkit-media-controls-panel {
+  background-color: var(--tts-bg-card);
+}
+
+.audio-player::-webkit-media-controls-play-button,
+.audio-player::-webkit-media-controls-pause-button {
+  background-color: var(--tts-accent-blue);
+  border-radius: 50%;
+}
+
+/* Animations */
+@keyframes tts-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tts-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes tts-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tts-container {
+    padding: 1rem;
+    margin-top: 70px;
+    gap: 1.5rem;
+  }
+  
+  .voice-settings,
+  .text-input-section,
+  .audio-info,
+  .audio-player-section {
+    padding: 1.5rem;
+  }
+  
+  .voice-setting-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .range-container {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .voice-select {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .control-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .btn {
+    min-width: unset;
+    width: 100%;
+  }
+  
+  .character-count {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .audio-info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tts-container {
+    padding: 0.75rem;
+  }
+  
+  .voice-settings,
+  .text-input-section,
+  .audio-info,
+  .audio-player-section {
+    padding: 1rem;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .text-textarea {
+    min-height: 100px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .tts-container {
+    --tts-border-color: rgba(255, 255, 255, 0.3);
+    --tts-text-secondary: #cccccc;
+    --tts-text-muted: #999999;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .tts-container *,
+  .tts-container *::before,
+  .tts-container *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
