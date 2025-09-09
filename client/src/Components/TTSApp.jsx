@@ -32,7 +32,7 @@ const TTSApp = () => {
       setError("Please enter some text");
       return;
     }
-
+    
     // Auth func
 
     setIsGenerating(true);
