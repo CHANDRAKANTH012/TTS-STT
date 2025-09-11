@@ -17,7 +17,8 @@ await connectDB();
 // Middlewares
 app.use(cors({
   origin: 'http://localhost:5173', //frontend URL
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -33,7 +34,12 @@ app.get("/auth/check", protectRoute, (req, res) => {
   res.json({ loggedIn: true, user: req.user });
 });
 
+app.use('/common-auth',(req,res)=>{
+  const {token} = req.cookies;
 
+  if(token) return res.json({success:true})
+  else return res.json({success:false})
+})
 
 app.use("/api/tts", ttsRouter);
 app.use("/api/history",protectRoute ,router);

@@ -7,30 +7,33 @@ const HistoryComponent = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  // const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLoggedOut, setIsLoggedOut] = useState(true)
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedOut, setIsLoggedOut] = useState(true)
 
   const checkLogout = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/auth/logout", {
-        credentials: "include"
-      });
-      if (res.success == true) {
-        setIsLoggedOut(true);
+      const res = await axios.post(
+        "http://localhost:5000/common-auth",
+        {},
+        {
+          withCredentials: true, // 👈 send cookies
+        }
+      );
+      if (res.data.success === true) {
+        setIsLoggedIn(true);
       } else {
-        setIsLoggedOut(false);
+        setIsLoggedIn(false);
       }
     } catch {
-      setIsLoggedOut(true);
+      setIsLoggedIn(false);
     }
   };
 
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/history",{
-          withCredentials: true
+        const res = await axios.get("http://localhost:5000/api/history", {
+          withCredentials: true,
         });
         setHistory(res.data);
       } catch (err) {
@@ -41,7 +44,7 @@ const HistoryComponent = () => {
       }
     };
     fetchHistory();
-    
+    checkLogout();
   }, []);
 
   return (
@@ -56,21 +59,19 @@ const HistoryComponent = () => {
         </div>
       ) : error ? (
         <p className="history-error">{error}</p>
-      ): isLoggedOut ? (
+      ) : isLoggedIn ? (
         <ul className="history-list">
           {history.map((item) => (
             <li key={item._id} className="history-card">
               <div className="history-row">
-                <span className="history-icon" aria-hidden="true">📝</span>
+                <span className="history-icon" aria-hidden="true">
+                  📝
+                </span>
                 <p className="history-text">{item.text}</p>
               </div>
 
               <div className="history-footer">
-                <span
-                  className={`badge ${
-                    item.result ? "success" : "failed"
-                  }`}
-                >
+                <span className={`badge ${item.result ? "success" : "failed"}`}>
                   {item.result ? "Success" : "Failed"}
                 </span>
 
@@ -84,7 +85,7 @@ const HistoryComponent = () => {
         </ul>
       ) : history.length === 0 ? (
         <p className="history-empty">No history yet.</p>
-      ) :(
+      ) : (
         <div>Sorry , we are unable to fetch the History data for now.</div>
       )}
     </section>

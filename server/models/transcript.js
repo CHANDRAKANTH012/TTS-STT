@@ -4,12 +4,6 @@ const transcriptSchema = mongoose.Schema(
   {
     text: { type: String, required: true },
     result: { type: Boolean, default: false },
-    // Just add this field to your existing schema
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
   },
   { timestamps: true }
 );

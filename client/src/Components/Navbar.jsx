@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import axios from "axios";
 
 const Navbar = () => {
 
@@ -9,7 +10,26 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleAuth = () => {
-    setIsLoggedIn(!isLoggedIn);
+    const checkLogout = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/auth/logout",
+        {},
+        {
+          withCredentials: true, // 👈 send cookies
+        }
+      );
+      if (res.data.success === true) {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
+    } catch {
+      setIsLoggedIn(true);
+    }
+  };
+    checkLogout();
+
   };
 
   const toggleMobileMenu = () => {
@@ -32,6 +52,9 @@ const Navbar = () => {
     }
   };
   checkAuth();
+
+
+
 }, []);
 
  

@@ -95,7 +95,7 @@ import protectRoute from '../middlewares/authorize.js'; // Add this import
 const router = express.Router();
 
 // Add authentication to the TTS route
-router.post('/tts', protectRoute, async (req, res) => {
+router.post('/tts', async (req, res) => {
   try {
     const { text, voiceId = 'en-US-ryan', rate = 0, pitch = 0 } = req.body;
 
@@ -139,7 +139,7 @@ router.post('/tts', protectRoute, async (req, res) => {
 
     // Store with user ID (minimal change to your existing code)
     await Transcript.create({
-      userId: req.user.userId, // Just add this one line
+      // Just add this one line
       text,
       result: result,
     })
