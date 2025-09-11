@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
@@ -16,13 +16,33 @@ const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/auth/check", {
+        credentials: "include"
+      });
+      if (res.ok) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch {
+      setIsLoggedIn(false);
+    }
+  };
+  checkAuth();
+}, []);
+
+ 
+
   return (
     <nav className="navbar">
       <div className="container">
         <div className="left">
           <div className="logo-container">
-            <img src="./logo.png" alt="logo" className="logo" />
-            <span className="logo-text">VoiceFlow</span>
+            <img src="./logo.png" alt="logo" className="logo"/>
+            <span className="logo-text"  onClick={()=>navigate('/')}>VoiceFlow</span>
           </div>
           <ul
             className={`nav-items ${
@@ -54,7 +74,7 @@ const Navbar = () => {
               <button className="btn btn-outline" onClick={()=>navigate('/login')}>
                 Login
               </button>
-              <button className="btn btn-primary" onClick={toggleAuth}>
+              <button className="btn btn-primary" onClick={()=>navigate('/signup')}>
                 Sign Up
               </button>
             </div>

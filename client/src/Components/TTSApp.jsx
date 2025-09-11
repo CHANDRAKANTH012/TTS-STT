@@ -33,7 +33,6 @@ const TTSApp = () => {
       return;
     }
     
-    // Auth func
 
     setIsGenerating(true);
     setError("");

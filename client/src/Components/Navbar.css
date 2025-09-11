@@ -79,6 +79,7 @@ body {
   height: 40px;
   border-radius: 8px;
   filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+  cursor: pointer;
   transition: filter 0.3s ease;
 }
 
@@ -93,6 +94,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  cursor: pointer;
 }
 
 .nav-items {

@@ -3,19 +3,55 @@ import "./Login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Important for cookies
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Login successful:", data.message);
+        
+        // Store user info if needed
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
+        
+        // Redirect to home
+        window.location.href = "/";
+        
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="main-div-login">
-
       <div className="login-card">
         {/* Left Side Branding */}
         <div className="login-left">
@@ -32,6 +68,20 @@ const Login = () => {
           <h2>Welcome Back 👋</h2>
           <p className="subtitle">Login to continue your journey</p>
 
+          {error && (
+            <div style={{
+              background: '#fee2e2',
+              color: '#dc2626',
+              padding: '12px',
+              borderRadius: '8px',
+              marginBottom: '20px',
+              fontSize: '14px',
+              textAlign: 'center'
+            }}>
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
               <label>Email</label>
@@ -42,6 +92,7 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -54,18 +105,19 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                />
+                disabled={loading}
+              />
             </div>
 
             <div className="form-options">
               <label>
-                <input type="checkbox" /> Remember me
+                <input type="checkbox" disabled={loading} /> Remember me
               </label>
               <a href="/forgot-password">Forgot Password?</a>
             </div>
 
-            <button type="submit" className="login-btn">
-              Login
+            <button type="submit" className="login-btn" disabled={loading}>
+              {loading ? "Signing in..." : "Login"}
             </button>
 
             <div className="divider">
@@ -73,8 +125,12 @@ const Login = () => {
             </div>
 
             <div className="social-login">
-              <button className="social-btn google">Google</button>
-              <button className="social-btn github">GitHub</button>
+              <button type="button" className="social-btn google" disabled={loading}>
+                Google
+              </button>
+              <button type="button" className="social-btn github" disabled={loading}>
+                GitHub
+              </button>
             </div>
 
             <p className="signup-text">

@@ -7,6 +7,7 @@ import History from './pages/History.jsx'
 import TTS from './pages/TTS.jsx'
 import STT from './pages/STT.jsx'
 import Login from './pages/Login.jsx'
+import Register from './pages/Register.jsx';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/stt' element={<STT/>}/>
         <Route path='/history' element={<History/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<Register/>}/>
       </Routes>
       
     </>

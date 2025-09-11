@@ -4,31 +4,28 @@
   box-sizing: border-box;
 }
 
-.main-div-login{
+.main-div-register{
     display: flex;
     justify-content: center;
     height: 85vh;
     align-items: center;
 }
 
-
-.login-card {
+.register-card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   display: flex;
   width: 750px;
-  height: 450px;
+  height: 500px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* linear-gradient(135deg, #00d4ff, #ff00ff, #ff6b00); */
-.login-left {
+.register-left {
   flex: 1;
   background: linear-gradient(135deg, #262b3c 0%, #8f56c9 100%);
-  /* background: linear-gradient(135deg, #00d4ff, #ff00ff, #ff6b00); */
   padding: 35px 25px;
   display: flex;
   flex-direction: column;
@@ -37,7 +34,7 @@
   color: white;
 }
 
-.login-left h1 {
+.register-left h1 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 12px;
@@ -47,28 +44,27 @@
   background-clip: text;
 }
 
-.login-left p {
+.register-left p {
   font-size: 0.9rem;
   line-height: 1.4;
   opacity: 0.9;
 }
 
-.login-left span {
+.register-left span {
   color: #fbbf24;
   font-weight: 600;
 }
 
-
-.login-right {
+.register-right {
   flex: 1;
-  padding: 50px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   background: rgba(255, 255, 255, 0.02);
 }
 
-.login-right h2 {
+.register-right h2 {
   font-size: 1.4rem;
   font-weight: 600;
   color: #fff;
@@ -77,16 +73,16 @@
 
 .subtitle {
   color: #94a3b8;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   font-size: 0.8rem;
 }
 
-.login-form {
+.register-form {
   width: 100%;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .form-group label {
@@ -112,7 +108,8 @@
   outline: none;
   border-color: #667eea;
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+  transform: scale(1.02);
 }
 
 .form-group input::placeholder {
@@ -121,9 +118,9 @@
 
 .form-options {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
   font-size: 0.75rem;
 }
 
@@ -140,17 +137,7 @@
   padding: 0;
 }
 
-.form-options a {
-  color: #667eea;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.form-options a:hover {
-  color: #4f46e5;
-}
-
-.login-btn {
+.register-btn {
   width: 100%;
   padding: 10px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -164,9 +151,9 @@
   margin-bottom: 15px;
 }
 
-.login-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+.register-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
 }
 
 .divider {
@@ -226,59 +213,51 @@
   color: #6cc644;
 }
 
-.signup-text {
+.signin-text {
   text-align: center;
   color: #94a3b8;
   font-size: 0.75rem;
 }
 
-.signup-text a {
+.signin-text a {
   color: #667eea;
   text-decoration: none;
   font-weight: 600;
 }
 
-.signup-text a:hover {
+.signin-text a:hover {
   color: #4f46e5;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .login-card {
+  .register-card {
     flex-direction: column;
     width: 90%;
     max-width: 350px;
     height: auto;
   }
   
-  .login-left {
+  .register-left {
     padding: 25px 20px;
     text-align: center;
   }
   
-  .login-left h1 {
+  .register-left h1 {
     font-size: 1.8rem;
   }
   
-  .login-right {
+  .register-right {
     padding: 25px 20px;
-  }
-  
-  .glow-circle {
-    display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .login-wrapper {
-    padding: 15px;
-  }
-  
-  .login-card {
+  .register-card {
     width: 95%;
   }
   
-  .login-left, .login-right {
+  .register-left, .register-right {
     padding: 20px 15px;
   }
   
@@ -288,12 +267,10 @@
   }
 }
 
-
-
 /* --- Animations --- */
 
 /* Fade + slide-in for card */
-.login-card {
+.register-card {
   animation: fadeSlideUp 0.8s ease forwards;
   opacity: 0;
   transform: translateY(40px);
@@ -306,7 +283,6 @@
   }
 }
 
-
 /* Input focus glow */
 .form-group input:focus {
   border-color: #667eea;
@@ -317,11 +293,11 @@
 }
 
 /* Button hover animation */
-.login-btn {
+.register-btn {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.login-btn:hover {
+.register-btn:hover {
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
 }

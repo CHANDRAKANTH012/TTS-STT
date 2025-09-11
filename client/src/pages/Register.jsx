@@ -1,32 +1,159 @@
-import React from "react";
+import React, { useState } from "react";
+import "./Register.css";
 
 const Register = () => {
+  const [formData, setFormData] = useState({ 
+    name: "", 
+    email: "", 
+    password: "" 
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:5000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Important for cookies
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Registration successful:", data.message);
+        
+        // Store user info if needed
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
+        
+        // Redirect to home or login page
+        window.location.href = "/";
+        
+      } else {
+        setError(data.message || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="container">
-      <div className="left">
-        <img src="./logo.png" alt="large-logo" />
-      </div>
+    <div className="main-div-register">
+      <div className="register-card">
+        {/* Left Side Branding */}
+        <div className="register-left">
+          <h1>VoiceFlow</h1>
+          <p>
+            Seamless <span>Text-to-Speech</span> and <span>Speech-to-Text</span>
+            <br /> with AI powered clarity ✨
+          </p>
+          <div className="glow-circle"></div>
+        </div>
 
-      <div className="right">
-        <h3>Welcome to Voice now</h3>
-        <p>Please enter your details:</p>
+        {/* Right Side Form */}
+        <div className="register-right">
+          <h2>Create Account 👋</h2>
+          <p className="subtitle">Join the voice revolution today</p>
 
-        <form action="" method="post">
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" />
+          {error && (
+            <div style={{
+              background: '#fee2e2',
+              color: '#dc2626',
+              padding: '5px',
+              borderRadius: '8px',
+              marginBottom: '20px',
+              fontSize: '14px',
+              textAlign: 'center'
+            }}>
+              {error}
+            </div>
+          )}
 
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" />
+          <form onSubmit={handleSubmit} className="register-form">
+            <div className="form-group">
+              <label>Full Name</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+            </div>
 
-          <label htmlFor="password">password</label>
-          <input type="password" id="password" />
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+            </div>
 
-          <div>
-            <input type="checkbox" id="checkbox" name="remember me" />
-          </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Create a strong password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+            </div>
 
-          <button type="submit">Sign up</button>
-        </form>
+            <div className="form-options">
+              <label>
+                <input type="checkbox" required disabled={loading} /> I agree to the T&C and Privacy Policy
+              </label>
+            </div>
+
+            <button type="submit" className="register-btn" disabled={loading}>
+              {loading ? "Creating Account..." : "Sign Up"}
+            </button>
+
+            <div className="divider">
+              <span>or</span>
+            </div>
+
+            <div className="social-login">
+              <button type="button" className="social-btn google" disabled={loading}>
+                Google
+              </button>
+              <button type="button" className="social-btn github" disabled={loading}>
+                GitHub
+              </button>
+            </div>
+
+            <p className="signin-text">
+              Already have an account? <a href="/login">Sign In</a>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

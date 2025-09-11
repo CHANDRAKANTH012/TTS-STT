@@ -88,13 +88,14 @@
 
 // routes/tts.js
 import express from 'express';
-import mongoose from 'mongoose';
 import axios from 'axios';
 import Transcript from '../models/transcript.js';
+import protectRoute from '../middlewares/authorize.js'; // Add this import
 
 const router = express.Router();
 
-router.post('/tts', async (req, res) => {
+// Add authentication to the TTS route
+router.post('/tts', protectRoute, async (req, res) => {
   try {
     const { text, voiceId = 'en-US-ryan', rate = 0, pitch = 0 } = req.body;
 
@@ -120,11 +121,9 @@ router.post('/tts', async (req, res) => {
           'Content-Type': 'application/json',
           'api-key': process.env.MURF_API_KEY
         }
-        // Remove responseType: 'arraybuffer' since we're getting JSON now
       }
     );
 
-    // Parse the response
     const audioData = response.data;
     
     console.log('Audio generated successfully:', {
@@ -133,20 +132,18 @@ router.post('/tts', async (req, res) => {
       remainingChars: audioData.remainingCharacterCount
     });
 
-    // Fix: Declare result outside the if block
-    let result = false; // Default value
-    
+    let result = false;
     if (response.data) {
       result = true;
     }
 
-    //store the response in database.
+    // Store with user ID (minimal change to your existing code)
     await Transcript.create({
+      userId: req.user.userId, // Just add this one line
       text,
       result: result,
     })
 
-    // Return the structured response
     res.json({
       success: true,
       audioUrl: audioData.audioFile,
