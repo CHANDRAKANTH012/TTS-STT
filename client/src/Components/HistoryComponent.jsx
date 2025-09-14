@@ -16,7 +16,7 @@ const HistoryComponent = () => {
         "http://localhost:5000/common-auth",
         {},
         {
-          withCredentials: true, // 👈 send cookies
+          withCredentials: true,
         }
       );
       if (res.data.success === true) {
