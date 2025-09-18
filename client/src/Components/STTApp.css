@@ -1,0 +1,154 @@
+/* =========================
+   STT Component Styles
+   ========================= */
+
+.stt-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+  background: #0d0d0d;
+  color: #f1f1f1;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.2);
+  min-height: 100vh;
+}
+
+/* ===== Heading Fix ===== */
+.stt-container h2 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin: 70px 0 20px 0;   /* adds breathing space below navbar */
+  padding: 15px 0;
+  letter-spacing: 1.5px;
+  background: linear-gradient(90deg, #ff4dff, #6c63ff, #00ffe7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(108, 99, 255, 0.8); /* glow effect */
+}
+
+/* Sub-description */
+.stt-description {
+  font-size: 1rem;
+  color: #bbb;
+  margin-bottom: 20px;
+}
+
+/* ===== Main Mic Section ===== */
+.stt-main {
+  margin: 25px 0;
+  padding: 25px;
+  border: 2px solid #6c63ff;
+  border-radius: 15px;
+  background: #1a1a1a;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(108, 99, 255, 0.25);
+}
+
+.stt-mic-status {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Transcript */
+.stt-transcript {
+  margin-top: 15px;
+  padding: 20px;
+  background: #0f0f0f;
+  border: 1px solid #333;
+  border-radius: 12px;
+  min-height: 160px;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  color: #eaeaea;
+}
+
+/* ===== Buttons ===== */
+.stt-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.stt-btn {
+  padding: 12px 26px;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+/* Theme Colors */
+.stt-btn-copy {
+  background: linear-gradient(135deg, #28a745, #20c997); /* green */
+}
+
+.stt-btn-start {
+  background: linear-gradient(135deg, #6c63ff, #9b59b6); /* purple */
+}
+
+.stt-btn-stop {
+  background: linear-gradient(135deg, #ff4b2b, #e74c3c); /* red */
+}
+
+.stt-btn-clear {
+  background: linear-gradient(135deg, #00c6ff, #00ffe7); /* cyan */
+}
+
+/* Hover Effects */
+.stt-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.stt-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== Error Styling ===== */
+.stt-error {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 1rem;
+  text-shadow: 0 0 6px rgba(255, 77, 77, 0.7);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .stt-container {
+    padding: 20px;
+  }
+
+  .stt-main {
+    padding: 18px;
+  }
+
+  .stt-btn {
+    min-width: 120px;
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+
+  .stt-container h2 {
+    font-size: 2rem;
+    margin-top: 50px;
+  }
+}
