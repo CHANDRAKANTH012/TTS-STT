@@ -122,7 +122,7 @@ authenRouter.post("/register", registerValidation, async (req, res) => {
     );
 
     // Set secure cookie
-    res.cookie("token", token, getCookieOptions());
+    // res.cookie("token", token, getCookieOptions());
 
     res.status(201).json({
       success: true,
@@ -131,7 +131,8 @@ authenRouter.post("/register", registerValidation, async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email
-      }
+      },
+      token:token
     });
 
   } catch (error) {
@@ -183,8 +184,10 @@ authenRouter.post('/login', loginValidation, async (req, res) => {
     );
 
     // Set secure cookie
-    res.cookie("token", token, getCookieOptions());
-
+    // res.cookie("token", token, getCookieOptions());
+    
+    console.log(token);
+    
     res.json({
       success: true,
       message: "Login successful",
@@ -192,7 +195,8 @@ authenRouter.post('/login', loginValidation, async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email
-      }
+      },
+      token:token
     });
 
   } catch (error) {

@@ -13,7 +13,7 @@ const HistoryComponent = () => {
   const checkLogout = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/common-auth",
+        `${import.meta.env.VITE_API_URL}/common-auth`,
         {},
         {
           withCredentials: true,
@@ -32,7 +32,7 @@ const HistoryComponent = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/history", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/history`, {
           withCredentials: true,
         });
         setHistory(res.data);

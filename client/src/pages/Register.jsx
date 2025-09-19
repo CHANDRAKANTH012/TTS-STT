@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./Register.css";
 
 const Register = () => {
-  const [formData, setFormData] = useState({ 
-    name: "", 
-    email: "", 
-    password: "" 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -21,28 +21,31 @@ const Register = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Important for cookies
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Important for cookies
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
 
       if (data.success) {
         console.log("Registration successful:", data.message);
-        
+
         // Store user info if needed
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("token", JSON.stringify(data.token));
         }
-        
+
         // Redirect to home or login page
         window.location.href = "/";
-        
       } else {
         setError(data.message || "Registration failed");
       }
@@ -73,15 +76,17 @@ const Register = () => {
           <p className="subtitle">Join the voice revolution today</p>
 
           {error && (
-            <div style={{
-              background: '#fee2e2',
-              color: '#dc2626',
-              padding: '5px',
-              borderRadius: '8px',
-              marginBottom: '20px',
-              fontSize: '14px',
-              textAlign: 'center'
-            }}>
+            <div
+              style={{
+                background: "#fee2e2",
+                color: "#dc2626",
+                padding: "5px",
+                borderRadius: "8px",
+                marginBottom: "20px",
+                fontSize: "14px",
+                textAlign: "center",
+              }}
+            >
               {error}
             </div>
           )}
@@ -128,7 +133,8 @@ const Register = () => {
 
             <div className="form-options">
               <label>
-                <input type="checkbox" required disabled={loading} /> I agree to the T&C and Privacy Policy
+                <input type="checkbox" required disabled={loading} /> I agree to
+                the T&C and Privacy Policy
               </label>
             </div>
 
@@ -141,10 +147,18 @@ const Register = () => {
             </div>
 
             <div className="social-login">
-              <button type="button" className="social-btn google" disabled={loading}>
+              <button
+                type="button"
+                className="social-btn google"
+                disabled={loading}
+              >
                 Google
               </button>
-              <button type="button" className="social-btn github" disabled={loading}>
+              <button
+                type="button"
+                className="social-btn github"
+                disabled={loading}
+              >
                 GitHub
               </button>
             </div>

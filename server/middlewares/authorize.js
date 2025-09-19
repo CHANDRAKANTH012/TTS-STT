@@ -22,7 +22,7 @@ import jwt from "jsonwebtoken";
 // Simple authentication middleware - only checks if user is logged in
 const protectRoute = (req, res, next) => {
   try {
-    const { token } = req.cookies;
+    const { token } = req.body;
 
     // Check if token exists
     if (!token) {

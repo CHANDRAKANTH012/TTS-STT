@@ -17,7 +17,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,6 +34,7 @@ const Login = () => {
         // Store user info if needed
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("token", JSON.stringify(data.token));
         }
         
         // Redirect to home

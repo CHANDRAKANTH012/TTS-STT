@@ -13,7 +13,7 @@ const Navbar = () => {
     const checkLogout = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/auth/logout",
+        `${import.meta.env.VITE_API_URL}/auth/logout`,
         {},
         {
           withCredentials: true, // 👈 send cookies
@@ -39,8 +39,10 @@ const Navbar = () => {
   useEffect(() => {
   const checkAuth = async () => {
     try {
-      const res = await fetch("http://localhost:5000/auth/check", {
-        credentials: "include"
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/check`, {
+        credentials: "include",
+        body: token
       });
       if (res.ok) {
         setIsLoggedIn(true);
