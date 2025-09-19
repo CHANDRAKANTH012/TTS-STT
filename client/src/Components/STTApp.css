@@ -24,7 +24,7 @@
   background: linear-gradient(90deg, #ff4dff, #6c63ff, #00ffe7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 15px rgba(108, 99, 255, 0.8); /* glow effect */
+  text-shadow: 0 0 6px 5px rgba(108, 99, 255, 0.8); /* glow effect */
 }
 
 /* Sub-description */

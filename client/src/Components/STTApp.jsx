@@ -59,8 +59,8 @@ const STTApp = () => {
 
   return (
     <div className="stt-container">
-      <h2>Speech to Text Converter</h2>
-      <p className="stt-description">A React hook...</p>
+      <h2>Speak whatever you want <br /> we don't judge!</h2>
+      {/* <p className="stt-description">A React hook...</p> */}
 
       <div className="stt-main">
         <p className="stt-mic-status">
