@@ -17,7 +17,7 @@ await connectDB();
 // Middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173", //frontend URL
+    origin: "*", //frontend URL
     credentials: true,
     optionsSuccessStatus: 200,
   })
