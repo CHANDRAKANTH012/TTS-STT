@@ -12,7 +12,7 @@ const Navbar = () => {
     const checkLogout = async () => {
       try {
         const res = await axios.post(
-          `http://localhost:5000/auth/logout`,
+          `${import.meta.env.VITE_API_URL}/auth/logout`,
           {}, // empty body
           {
             headers: {
@@ -41,7 +41,7 @@ const Navbar = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/auth/check`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/check`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

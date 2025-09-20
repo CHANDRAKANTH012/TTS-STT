@@ -12,7 +12,7 @@ const HistoryComponent = () => {
   const checkLogout = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/common-auth`,
+        `${import.meta.env.VITE_API_URL}/common-auth`,
         {}, // empty body
         {
           headers: {
@@ -33,7 +33,7 @@ const HistoryComponent = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/history`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/history`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
