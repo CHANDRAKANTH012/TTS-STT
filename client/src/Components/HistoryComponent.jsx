@@ -8,15 +8,16 @@ const HistoryComponent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isLoggedOut, setIsLoggedOut] = useState(true)
 
   const checkLogout = async () => {
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/common-auth`,
-        {},
+        `http://localhost:5000/common-auth`,
+        {}, // empty body
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       if (res.data.success === true) {
@@ -32,9 +33,12 @@ const HistoryComponent = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/history`, {
-          withCredentials: true,
+        const res = await axios.get(`http://localhost:5000/api/history`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         });
+
         setHistory(res.data);
       } catch (err) {
         console.error(err);

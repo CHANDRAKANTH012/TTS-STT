@@ -21,19 +21,15 @@
 
 //   const token = jwt.sign({email},"VoiceFlow");
 
-
 //   res.cookie("token",token);
 //   res.json({success:true,message:"user created successfully"});
 
-
 // });
-
 
 // authenRouter.post('/logout',(req,res)=>{
 //     res.cookie("token","");
 //     res.json({success:true,message:"user logged out"});
 // })
-
 
 // authenRouter.post('/login',async(req,res)=>{
 //     const {email, password } = req.body;
@@ -41,7 +37,7 @@
 //         email
 //     })
 //     if(!user) return res.json({success:false,message:"User not found"})
-    
+
 //     bcrypt.compare(password, user.password ,function(err, result){
 //         if(result){
 //             const token = jwt.sign({email:user.email},"VoiceFlow");
@@ -57,41 +53,30 @@
 
 // export default authenRouter;
 
-
-
 import express from "express";
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
-import { body, validationResult } from 'express-validator';
+import jwt from "jsonwebtoken";
+import { body, validationResult } from "express-validator";
 
 const authenRouter = express.Router();
 
 // Validation middleware
 const registerValidation = [
-  body('email').isEmail().normalizeEmail(),
-  body('password').isLength({ min: 8 }).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/),
-  body('name').trim().isLength({ min: 2, max: 50 })
+  body("email").isEmail().normalizeEmail(),
+  body("password")
+    .isLength({ min: 8 })
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/),
+  body("name").trim().isLength({ min: 2, max: 50 }),
 ];
 
 const loginValidation = [
-  body('email').isEmail().normalizeEmail(),
-  body('password').notEmpty()
+  body("email").isEmail().normalizeEmail(),
+  body("password").notEmpty(),
 ];
-
-// Helper function for cookie options
-const getCookieOptions = () => ({
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict',
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
-});
 
 authenRouter.post("/register", registerValidation, async (req, res) => {
   try {
-    
-    
-
     const { name, email, password } = req.body;
 
     // Check if user already exists
@@ -99,7 +84,7 @@ authenRouter.post("/register", registerValidation, async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "User already exists with this email"
+        message: "User already exists with this email",
       });
     }
 
@@ -116,9 +101,9 @@ authenRouter.post("/register", registerValidation, async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, email: user.email }, 
+      { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: "24h" }
     );
 
     // Set secure cookie
@@ -130,21 +115,20 @@ authenRouter.post("/register", registerValidation, async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
       },
-      token:token
+      token: token,
     });
-
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error("Registration error:", error);
     res.status(500).json({
       success: false,
-      message: "Internal server error"
+      message: "Internal server error",
     });
   }
 });
 
-authenRouter.post('/login', loginValidation, async (req, res) => {
+authenRouter.post("/login", loginValidation, async (req, res) => {
   try {
     // Check validation errors
     const errors = validationResult(req);
@@ -152,7 +136,7 @@ authenRouter.post('/login', loginValidation, async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Validation failed",
-        errors: errors.array()
+        errors: errors.array(),
       });
     }
 
@@ -163,7 +147,7 @@ authenRouter.post('/login', loginValidation, async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Invalid credentials" // Don't reveal if email exists
+        message: "Invalid credentials", // Don't reveal if email exists
       });
     }
 
@@ -172,7 +156,7 @@ authenRouter.post('/login', loginValidation, async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: "Invalid credentials"
+        message: "Invalid credentials",
       });
     }
 
@@ -180,53 +164,53 @@ authenRouter.post('/login', loginValidation, async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: "24h" }
     );
 
     // Set secure cookie
     // res.cookie("token", token, getCookieOptions());
-    
+
     console.log(token);
-    
+
     res.json({
       success: true,
       message: "Login successful",
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
       },
-      token:token
+      token: token,
     });
-
   } catch (error) {
-    console.error('Login error:', error);
+    console.error("Login error:", error);
     res.status(500).json({
       success: false,
-      message: "Internal server error"
+      message: "Internal server error",
     });
   }
 });
 
-authenRouter.post('/logout', (req, res) => {
-  try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict'
-    });
-    
-    res.json({
-      success: true,
-      message: "Logged out successfully"
-    });
-  } catch (error) {
-    console.error('Logout error:', error);
-    res.status(500).json({
-      success: false,
-      message: "Internal server error"
-    });
-  }
+// authenRouter.post('/logout', (req, res) => {
+//   try {
+//     res.json({
+//       success: true,
+//       message: "Logged out successfully"
+//     });
+//   } catch (error) {
+//     console.error('Logout error:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Internal server error"
+//     });
+//   }
+// });
+
+authenRouter.post("/logout", (req, res) => {
+  return res.json({
+    success: true,
+    message: "Logged out successfully",
+  });
 });
 
 export default authenRouter;

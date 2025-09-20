@@ -4,32 +4,34 @@ import "./Navbar.css";
 import axios from "axios";
 
 const Navbar = () => {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleAuth = () => {
     const checkLogout = async () => {
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/logout`,
-        {},
-        {
-          withCredentials: true, // 👈 send cookies
+      try {
+        const res = await axios.post(
+          `http://localhost:5000/auth/logout`,
+          {}, // empty body
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (res.data.success === true) {
+          localStorage.removeItem("token"); // ✅ clear client-side
+          setIsLoggedIn(false);
+        } else {
+          setIsLoggedIn(true);
         }
-      );
-      if (res.data.success === true) {
-        setIsLoggedIn(false);
-      } else {
+      } catch {
         setIsLoggedIn(true);
       }
-    } catch {
-      setIsLoggedIn(true);
-    }
-  };
+    };
     checkLogout();
-
   };
 
   const toggleMobileMenu = () => {
@@ -37,37 +39,37 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-  const checkAuth = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/check`, {
-        credentials: "include",
-        body: token
-      });
-      if (res.ok) {
-        setIsLoggedIn(true);
-      } else {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/auth/check`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        console.log(res);
+
+        if (res.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch {
         setIsLoggedIn(false);
       }
-    } catch {
-      setIsLoggedIn(false);
-    }
-  };
-  checkAuth();
-
-
-
-}, []);
-
- 
+    };
+    checkAuth();
+  }, []);
 
   return (
     <nav className="navbar">
       <div className="container">
         <div className="left">
           <div className="logo-container">
-            <img src="./logo.png" alt="logo" className="logo"/>
-            <span className="logo-text"  onClick={()=>navigate('/')}>VoiceFlow</span>
+            <img src="./logo.png" alt="logo" className="logo" />
+            <span className="logo-text" onClick={() => navigate("/")}>
+              VoiceFlow
+            </span>
           </div>
           <ul
             className={`nav-items ${
@@ -96,10 +98,16 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="auth-container logged-out">
-              <button className="btn btn-outline" onClick={()=>navigate('/login')}>
+              <button
+                className="btn btn-outline"
+                onClick={() => navigate("/login")}
+              >
                 Login
               </button>
-              <button className="btn btn-primary" onClick={()=>navigate('/signup')}>
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/signup")}
+              >
                 Sign Up
               </button>
             </div>

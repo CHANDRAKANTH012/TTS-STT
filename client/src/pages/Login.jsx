@@ -17,12 +17,12 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      const response = await fetch(`http://localhost:5000/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Important for cookies
+
         body: JSON.stringify(formData),
       });
 
@@ -30,16 +30,18 @@ const Login = () => {
 
       if (data.success) {
         console.log("Login successful:", data.message);
-        
+
         // Store user info if needed
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
-          localStorage.setItem("token", JSON.stringify(data.token));
         }
-        
+
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
+
         // Redirect to home
         window.location.href = "/";
-        
       } else {
         setError(data.message || "Login failed");
       }
@@ -70,15 +72,17 @@ const Login = () => {
           <p className="subtitle">Login to continue your journey</p>
 
           {error && (
-            <div style={{
-              background: '#fee2e2',
-              color: '#dc2626',
-              padding: '12px',
-              borderRadius: '8px',
-              marginBottom: '20px',
-              fontSize: '14px',
-              textAlign: 'center'
-            }}>
+            <div
+              style={{
+                background: "#fee2e2",
+                color: "#dc2626",
+                padding: "12px",
+                borderRadius: "8px",
+                marginBottom: "20px",
+                fontSize: "14px",
+                textAlign: "center",
+              }}
+            >
               {error}
             </div>
           )}
@@ -126,10 +130,18 @@ const Login = () => {
             </div>
 
             <div className="social-login">
-              <button type="button" className="social-btn google" disabled={loading}>
+              <button
+                type="button"
+                className="social-btn google"
+                disabled={loading}
+              >
                 Google
               </button>
-              <button type="button" className="social-btn github" disabled={loading}>
+              <button
+                type="button"
+                className="social-btn github"
+                disabled={loading}
+              >
                 GitHub
               </button>
             </div>
